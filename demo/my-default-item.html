@@ -1,0 +1,74 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../polymer/polymer.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <my-default-item data="{'key':'Value'}"></my-default-item>
+
+@demo
+-->
+<dom-module id="my-default-item">
+
+    <style>
+        #content {
+            font-weight: bold;
+            color: white;
+            background: gray;
+        }
+    </style>
+
+    <div id="content"></div>
+
+    <script>
+
+        Polymer({
+
+            is: 'my-default-item',
+
+            properties: {
+
+                /**
+                 * `data` is the JSON object data-model for the template.
+                 */
+                data: {
+                    type: Object,
+                    value: function() { return {}; }
+                }
+            },
+
+            // Element Lifecycle
+
+            ready: function() {
+                // `ready` is called after all elements have been configured, but
+                // propagates bottom-up. This element's children are ready, but parents
+                // are not.
+                //
+                // This is the point where you should make modifications to the DOM (when
+                // necessary), or kick off any processes the element wants to perform.
+
+                var p, key;
+                var text = "";
+
+                for(key in this.data) {
+                    p = this.create("p");
+                    text = key + this.data[key];
+                    text = document.createTextNode(text);
+                    p.appendChild(text);
+                    this.$.content.appendChild(p);
+                }
+            }
+        });
+
+    </script>
+</dom-module>

@@ -1,0 +1,26 @@
+[
+    {
+        "type": "member",
+        "name": "Mario"
+    },
+    {
+        "type": "comment",
+        "author": "John Doe",
+        "message": "Let's get together sometime?"
+    },
+    {
+        "type": "comment",
+        "author": "Mary Anne",
+        "message": "When is everyone free?"
+    },
+    {
+        "type": "like",
+        "source": "Mario liked a comment."
+    },
+    {
+        "type": "post",
+        "author": "Arnold Peterman",
+        "message": "Meeting Suggestions"
+    }
+
+]
