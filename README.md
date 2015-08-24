@@ -1,7 +1,9 @@
 # my-feed
 
 An element that infinitely scrolls a list of json (feed) objects.
-
+Each feed item can have its own unique look/feel, as it is its own template to be rendered by the feed element.
+The feed element must be supplied with a registered element that will serve as a "feed item factory."
+The factory knows how to create feed items based upon the json data it receives.
 
 ## Dependencies
 
