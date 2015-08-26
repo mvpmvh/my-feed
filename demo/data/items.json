@@ -15,7 +15,7 @@
     },
     {
         "type": "like",
-        "source": "Mario liked a comment."
+        "detail": "Mario liked a comment."
     },
     {
         "type": "post",
