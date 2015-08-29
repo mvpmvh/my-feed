@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../event-infinite-scroll/event-infinite-scroll.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="bower_components/iron-flex-layout/classes/iron-flex-layout.html">
 
 <!--
 An element that infinitely scrolls a list of json (feed) objects.
@@ -26,26 +27,20 @@ Example:
         <style>
             .sizedFrame {
                 overflow-y: auto;
-                display: flex;
-                flex-wrap: wrap;
-                flex-direction: row;
-                height: 100%;
-                justify-content: flex-start;
-                align-content: flex-start;
-                align-items: flex-start;
+
             }
         </style>
 
         <iron-ajax id="ia" url="{{url}}" handle-as="json" on-response="_handleResponse" auto></iron-ajax>
+            <div id="scrollUp" class="layout horizontal wrap center-justified">
+                <event-infinite-scroll id="scrollEvent"
+                   scroll-offset="{{offset}}"
+                   loading-delay="300"
+                   on-reach-bottom="_reachedBottom"
+                   on-reach-top="_reachedTop">
+                </event-infinite-scroll>
+            </div>
 
-        <div id="scrollUp" class="sizedFrame">
-            <event-infinite-scroll id="scrollEvent"
-                    scroll-offset="{{offset}}"
-                    loading-delay="300"
-                    on-reach-bottom="_reachedBottom"
-                    on-reach-top="_reachedTop">
-            </event-infinite-scroll>
-        </div>
     </template>
     <script>
         'use strict';
