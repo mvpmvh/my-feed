@@ -21,6 +21,29 @@
         "type": "post",
         "author": "Arnold Peterman",
         "message": "Meeting Suggestions"
+    },
+    {
+        "type": "member",
+        "name": "Liz"
+    },
+    {
+        "type": "comment",
+        "author": "Liz",
+        "message": "If you're pregnant you shouldn't be drinking"
+    },
+    {
+        "type": "comment",
+        "author": "Mary Anne",
+        "message": "What?"
+    },
+    {
+        "type": "like",
+        "detail": "Liz liked a post."
+    },
+    {
+        "type": "post",
+        "author": "George",
+        "message": "What's a new book to read"
     }
 
 ]

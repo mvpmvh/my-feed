@@ -21,16 +21,27 @@ Example:
 <dom-module id="my-new-member-item">
 
     <style>
-        :host {
-            display: block;
-            box-sizing: border-box;
-            background: blue;
+        #content {
+            width: 300px;
+            min-height: 250px;
+            padding: 10px;
+        }
+
+        paper-card {
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: 0;
+            background-color: lightblue;
+            margin: 10px;
         }
     </style>
 
     <template>
-        <h3>New Member!</h3>
-        <p>{{data.name}}</p>
+        <paper-card heading="New Member">
+            <div id="content">
+                <p>{{data.name}}</p>
+            </div>
+        </paper-card>
     </template>
 
 </dom-module>

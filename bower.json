@@ -21,7 +21,8 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0",
-    "event-infinite-scroll": "andreasonny83/event-infinite-scroll#master"
+    "event-infinite-scroll": "andreasonny83/event-infinite-scroll#master",
+    "paper-card": "PolymerElements/paper-card#~1.0.3"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

@@ -8,6 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../paper-card/paper-card.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -21,18 +22,30 @@ Example:
 <dom-module id="my-comment-item">
 
     <style>
-        :host {
-            display: block;
-            box-sizing: border-box;
-            background: green;
+        #content {
+            width: 300px;
+            min-height: 250px;
+            padding: 10px;
+        }
+
+        paper-card {
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: 0;
+            background-color: lightgreen;
+            margin: 10px;
         }
     </style>
 
     <template>
-        <h3>New Comment!</h3>
-        <p>{{data.message}}</p>
-        <br>
-        --<span>{{data.author}}</span>
+        <paper-card>
+            <div id="content">
+                <h3>New Comment!</h3>
+                <p>{{data.message}}</p>
+                <br>
+                --<span>{{data.author}}</span>
+            </div>
+        </paper-card>
     </template>
 
 </dom-module>
