@@ -10,7 +10,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../event-infinite-scroll/event-infinite-scroll.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
-<link rel="import" href="bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../neon-animation/animations/cascaded-animation.html">
+
+
 
 <!--
 An element that infinitely scrolls a list of json (feed) objects.
@@ -27,21 +32,22 @@ Example:
         <style>
             .sizedFrame {
                 overflow-y: auto;
-
             }
         </style>
 
         <iron-ajax id="ia" url="{{url}}" handle-as="json" on-response="_handleResponse" auto></iron-ajax>
-            <div id="scrollUp" class="layout horizontal wrap center-justified">
-                <event-infinite-scroll id="scrollEvent"
-                   scroll-offset="{{offset}}"
-                   loading-delay="300"
-                   on-reach-bottom="_reachedBottom"
-                   on-reach-top="_reachedTop">
-                </event-infinite-scroll>
-            </div>
 
+        <div id="scrollUp" class="layout horizontal wrap center-justified">
+            <event-infinite-scroll id="scrollEvent"
+               scroll-offset="{{offset}}"
+               loading-delay="300"
+               on-reach-bottom="_reachedBottom"
+               on-reach-top="_reachedTop">
+            </event-infinite-scroll>
+
+        </div>
     </template>
+
     <script>
         'use strict';
 
@@ -67,8 +73,25 @@ Example:
                 offset: {
                     type: Number,
                     value: 10
+                },
+
+                animationConfig: {
+                    value: function() {
+                        return [
+                            {
+                                name: 'cascaded-animation',
+                                animation: 'fade-in-animation',
+                                nodes: this.$.scrollUp.children,
+                                timing: {delay: 500, duration: 1500}
+                            }
+                        ]
+                    }
                 }
             },
+
+            behaviors: [
+                Polymer.NeonAnimationRunnerBehavior
+            ],
 
             ready: function () {
                 if(this.factory) {
@@ -90,7 +113,7 @@ Example:
             _handleResponse: function() {
                 var items = this.$.ia.lastResponse;
                 this._createItems(items);
-            },
+             },
 
             _createItems: function(items) {
                 if(Array.isArray(items)) {
@@ -101,11 +124,20 @@ Example:
                         for(var i=0; i<numItems; i++) {
                             feedItem = this.factory.createItem(items[i]);
                             if(feedItem) {
+                                //TODO: should I be using Polymer.dom() operations here?
                                 this.$.scrollUp.appendChild(feedItem);
+                                //Polymer.dom(this.$.scrollUp).appendChild(feedItem);
+                                this._fadeInItem(feedItem);
                             }
                         }
+                        //Polymer.dom.flush();
                     }
                 }
+            },
+
+            _fadeInItem: function(item) {
+                this._animatedItem = item;
+                this.playAnimation();
             }
         });
     </script>
