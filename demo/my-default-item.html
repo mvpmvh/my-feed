@@ -61,6 +61,10 @@ Example:
 
             _display: "",
 
+            listeners: {
+                'tap': '_onItemTap'
+            },
+
             // Element Lifecycle
 
             ready: function() {
@@ -75,6 +79,10 @@ Example:
                     p = '<p>' + key + ': ' + newValue[key] + '</p>';
                     this.$.content.innerHTML = p;
                 }
+            },
+
+            _onItemTap: function(event) {
+                this.fire('item-tap', {item: this});
             }
         });
 

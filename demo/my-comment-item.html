@@ -62,7 +62,16 @@ Example:
                 type: Object,
                 value: function() { return {}; }
             }
+        },
+
+        listeners: {
+            'tap': '_onItemTap'
+        },
+
+        _onItemTap: function(event) {
+            this.fire('item-tap', {item: this});
         }
+
     });
 
 </script>

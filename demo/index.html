@@ -20,22 +20,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="my-comment-item.html">
     <link rel="import" href="my-new-member-item.html">
     <link rel="import" href="my-post-item.html">
+    <link rel="import" href="feed-details.html">
+    <link rel="import" href="../../neon-animation/neon-animated-pages.html">
 </head>
 <body>
 
-<p>An example of <code>&lt;my-feed&gt;</code>:</p>
+    <p>An example of <code>&lt;my-feed&gt;</code>:</p>
 
-<!-- TODO: adjust offset logic/height in order to not attempt 2 data fetches on page load -->
-<my-feed url="data/items.json" factory="sample-item-factory"></my-feed>
+    <template is="dom-bind">
+        <neon-animated-pages id="pages" selected="0" on-feed-item-tap="_onItemTap">
+            <!-- TODO: adjust offset logic/height in order to not attempt 2 data fetches on page load -->
+            <my-feed url="data/items.json" factory="sample-item-factory"></my-feed>
+            <feed-details id="full_details" on-detail-tap="_onDetailsTap"></feed-details>
+        </neon-animated-pages>
+    </template>
 
-<script>
-    document.addEventListener("feed-bottom", function(event) {
-        console.log("fetching more data...");
-    });
+    <script>
+        document.addEventListener("feed-bottom", function(event) {
+            console.log("fetching more data...");
+        });
 
-    document.addEventListener("feed-top", function(event) {
-        console.log("ready to fetch newer data...");
-    })
-</script>
+        document.addEventListener("feed-top", function(event) {
+            console.log("ready to fetch newer data...");
+        });
+
+        var scope = document.querySelector('template[is="dom-bind"]');
+        scope._onItemTap = function(event) {
+//            this.$.full_details.color = event.detail.item.style.color;
+            this.$.full_details.color = 'lightgreen';
+            this.$.pages.selected = 1;
+        };
+
+        scope._onDetailsTap = function(event) {
+            this.$.pages.selected = 0;
+        };
+    </script>
 </body>
 </html>

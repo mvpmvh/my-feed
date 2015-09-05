@@ -34,7 +34,7 @@ Example:
     </style>
 
     <template>
-        <paper-card>
+        <paper-card class="feed-item">
             <div id="content">
                 <h3>New Post!</h3>
                 <p><span>{{data.message}}</span></p>
@@ -61,6 +61,14 @@ Example:
                 type: Object,
                 value: function() { return {}; }
             }
+        },
+
+        listeners: {
+            'tap': '_onItemTap'
+        },
+
+        _onItemTap: function(event) {
+            this.fire('item-tap', {item: this});
         }
     });
 

@@ -11,10 +11,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../event-infinite-scroll/event-infinite-scroll.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../neon-animation/neon-shared-element-animatable-behavior.html">
 <link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
 <link rel="import" href="../neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../neon-animation/animations/scale-down-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-from-left-animation.html">
 <link rel="import" href="../neon-animation/animations/cascaded-animation.html">
-
+<link rel="import" href="../neon-animation/animations/hero-animation.html">
 
 
 <!--
@@ -53,6 +56,7 @@ Example:
 
         Polymer({
             is: "my-feed",
+
             properties: {
 
                 /*
@@ -77,20 +81,40 @@ Example:
 
                 animationConfig: {
                     value: function() {
-                        return [
-                            {
+                        return {
+                            'load': [{
                                 name: 'cascaded-animation',
                                 animation: 'scale-up-animation',
                                 nodes: this.$.scrollUp.children
-                            }
-                        ]
+                            }],
+
+                            'entry': [{
+                                name: 'slide-from-left-animation',
+                                node: this
+                            }],
+
+                            'exit': [{
+                                name: 'hero-animation',
+                                id: 'hero',
+                                fromPage: this
+                            },
+                            {
+                                name: 'cascaded-animation',
+                                animation: 'scale-down-animation'
+                            }]
+                        }
                     }
                 }
             },
 
             behaviors: [
+                Polymer.NeonSharedElementAnimatableBehavior,
                 Polymer.NeonAnimationRunnerBehavior
             ],
+
+            listeners: {
+                'item-tap': '_onItemTap'
+            },
 
             ready: function () {
                 if(this.factory) {
@@ -136,7 +160,22 @@ Example:
 
             _fadeInItem: function(item) {
                 this._animatedItem = item;
-                this.playAnimation();
+                this.playAnimation('load');
+            },
+
+            _onItemTap: function(event) {
+                var nodes = this.$.scrollUp.children;
+                var nodesToScale = [];
+
+                for(var node, index = 0; node = nodes[index]; index++) {
+                    if (node !== event.detail.item) {
+                        nodesToScale.push(node);
+                    }
+                }
+
+                this.animationConfig['exit'][1].nodes = nodesToScale;
+                this.sharedElements = {'hero': event.detail.item};
+                this.fire('feed-item-tap', {item: event.detail.item});
             }
         });
     </script>
